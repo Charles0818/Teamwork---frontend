@@ -1,22 +1,383 @@
-.App {
-  text-align: center;
+:root {
+    --dark: #0d021d;
+    --table-dark: rgba(0, 0, 0, 0.432);
+    --grey-color2: rgba(255, 255, 255, 0.671);
+    --white: #fff;
+    --color2: #690483;
+    --color-2--opacity: #ff6a0d85;
+    --grey-color: #c0c0c0;
+    --font-family-1: 'Ubuntu', sans-serif;
+    --font-family-2: 'Pacifico', cursive;
+    --font-family-3: 'Vollkorn', serif;  --danger: rgb(204, 9, 9);
+    --primary: #0775db;
 }
 
-.App-logo {
-  height: 40vmin;
+.danger-text {
+    color: var(--danger)
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.danger-bckgr {
+    background: var(--danger);
+}
+.danger-background {
+    background: var(--danger)
 }
 
-.App-link {
-  color: #09d3ac;
+.primary-color {
+    color: var(--primary);
+}
+
+.italic {
+    font-style: italic;
+}
+
+.paint-text {
+    color: var(--color2);
+}
+
+.text-content {
+    font-size: .95em;
+    font-family: sans-serif;
+    word-wrap: break-word;
+    word-break: keep-all;
+    writing-mode: horizontal-tb;
+    text-align: left;
+    text-overflow: ellipsis;
+    line-height: 25px;
+}
+
+.font-xlg {
+    font-size: 2em;
+}
+
+.font-lg {
+    font-size: 1.5em;
+}
+
+.font-md {
+    font-size: 1em;
+}
+
+.font-sm {
+    font-size: .85em !important;
+}
+
+.large-font-icon {
+    font-size: 15em;
+}
+.padding-lg {
+    padding: 50px 40px;
+}
+
+.padding-md {
+    padding: 15px 10px;
+}
+
+.padding-sm {
+    padding: 4px 5px !important;
+}
+
+.padding-bottom-sm {
+    padding-bottom: 15px;
+}
+
+.padding-bottom-md {
+    padding-bottom: 30px;
+}
+.padding-bottom-lg {
+    padding-bottom: 50px;
+}
+
+.padding-top-lg {
+    padding-top: 50px;
+}
+
+.padding-top-md {
+    padding-top: 30px;
+}
+
+.padding-top-sm {
+    padding-top: 15px;
+}
+
+.padding-left-md {
+    padding-left: 30px;
+}
+
+.padding-left-sm {
+    padding-left: 15px;
+}
+
+.padding-right-sm {
+    padding-right: 15px;
+}
+
+.padding-right-lg {
+    padding-right: 50px;
+}
+
+.page-padding {
+    padding: 0 50px;
+}
+.margin-bottom-sm {
+    margin-bottom: 10px;
+}
+
+.margin-bottom-md {
+    margin-bottom: 30px;
+}
+
+.margin-left-md {
+    margin-left: 30px;
+}
+
+.margin-top-md {
+    margin-top: 30px;
+}
+
+.margin-top-lg {
+    margin-top: 50px;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}
+
+.icon, .margin-right-sm {
+    margin-right: 10px;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+.overflow--h {
+    overflow: hidden;
+}
+
+.border-line--v,
+.border-line--h {
+    position: relative;
+}
+
+.border-line--v::before,
+.border-line--h::before {
+    content: '';
+    position: absolute;
+    background: linear-gradient(to right,rgba(197,202,213,.7) 70%,rgba(255,255,255,0));
+
+}
+
+.border-line--v::before {
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+
+}
+.border-line--h::before {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+}
+
+.border-r-circle {
+    border-radius: 50%;
+}
+.color-dark {
+    color: #000;
+}
+
+.color-white {
+    color: #ffff;
+}
+
+.bckgr-white {
+    background: #fff;
+}
+
+.color2 {
+    color: var(--color2);
+}
+
+.trans--bckgr {
+    background: #6a048346;
+}
+
+.align-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+}
+
+/* Flex Control*/
+.d-flex {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-flow: row wrap;
+}
+
+.d-flex.nowrap {
+    flex-flow: nowrap;
+}
+
+.d-flex.column {
+    flex-direction: column;
+}
+
+.d-flex.align-items--center {
+    align-items: center;
+}
+
+.d-flex.justify-content--s-between {
+    justify-content: space-between;
+}
+
+.d-flex.justify-content--center {
+    justify-content: center;
+}
+
+.justify-self-end {
+    justify-self: flex-end;
+}
+/*End of Flex Control*/
+.d-block {
+    display: block;
+}
+
+.d-inline-block {
+    display: inline-block;
+}
+/*Top Navigation bar*/
+
+header {
+    position: sticky;
+    top: 0;
+}
+.top--navbar {
+    width: 100%;
+    height: 80px;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 25px;
+    box-shadow: 0px 3px 5px #a0a0a0;
+    z-index: 99;
+}
+
+.favicon {
+    font-family: var(--font-family-2)
+}
+
+.favicon > .font-sm {
+    font-size: 1.3em !important;
+}
+
+.nav-icon {
+    cursor: pointer;
+    
+}
+
+.page-container {
+    width: 85%;
+    margin: 40px auto;
+    padding: 20px 40px;
+}
+
+.content-wrapper {
+    margin-top: 20px;
+    padding: 20px 40px;
+}
+
+.static--modal-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    max-width: 65%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: 3px 4px 4px #a8a6a6,
+                -3px -4px 4px #b9b5b5;
+    overflow-y: auto;
+}
+
+.link-wrap--box {
+    margin: 0 40px 40px;
+}
+
+.box {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    box-shadow: 1px 1px 2px #a0a0a0,
+                -1px -1px 2px #a0a0a0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+.box:hover {
+    box-shadow: 3px 4px 5px #a0a0a0,
+                -3px -4px 5px #a0a0a0;
+}
+.accordion--btn {
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .5s all;
+}
+.accordion--btn.active {
+    color: #fff;
+    background: var(--color2);
+}
+
+.accordion--btn:hover {
+    opacity: .8;
+}
+
+@media (max-width: 1199.98px) {
+    .desc {
+        width: 45%;
+    }
+}
+
+@media screen and (min-width: 1050px) {
+
+}
+@media screen and (min-width: 850px) {
+
+}
+
+@media screen and (max-width: 991.98px) {
+
+}
+
+@media screen and (max-width: 890px) {
+    
+}
+
+@media screen and (max-width: 767.98px) {
+
+    .content-wrapper {
+        margin-top: 15px;
+        padding: 10px 20px;
+    }
+}
+
+@media screen and (max-width: 575.98px) {
+
+}
+
+@media screen and (max-width: 480px) {
+
 }

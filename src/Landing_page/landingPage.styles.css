@@ -1,0 +1,91 @@
+.landingPage-header {
+    position: relative;
+    background: linear-gradient(to bottom right,
+     var(--color2),
+    rgba(0, 0, 0, 0.863)),
+    url('../Assets/images/design-desk-eyewear-313690.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: var(--font-family);
+    width: 100%;
+    height: 100vh;
+}
+
+.desc {
+    width: 35%;
+}
+
+.nav-link {
+    border-radius: 5px;
+    transition: .5s all;
+    margin-right: 20px;
+    padding: 7px 13px;
+    font-size: 1.2em;
+}
+.nav-link:hover {
+    color: var(--color2);
+    background: var(--white);
+}
+
+
+@keyframes rotate {
+    0% {
+        transfrom: rotate(90deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+@media (max-width: 1199.98px) {
+    .desc {
+        width: 45%;
+    }
+}
+
+
+@media screen and (min-width: 1050px) {
+    .quicklink[data-trial--btn] {
+        display: inline-block;
+    }
+}
+@media screen and (min-width: 850px) {
+    .quicklink[data-trial--btn] {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 991.98px) {
+
+}
+
+@media screen and (max-width: 890px) {
+    
+    .left, .navbar1 {
+        display: none;
+    }
+    
+}
+
+@media screen and (max-width: 767.98px) {
+    .desc {
+        order: 1;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 575.98px) {
+    .desc {
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .wrapper {
+        padding: 0 20px !important;
+    }
+}
