@@ -1,0 +1,145 @@
+
+.main {
+    width: calc(100% - (
+        var(--sideBar-left-width) + 
+        var(--sideBar-right-width)
+    ));
+    flex-basis: auto;
+    flex-shrink: 0;
+    margin-left: calc(var(--sideBar-left-width) + 20px);
+    /* margin-right: 20px; */
+    overflow: hidden;
+}
+
+
+.fa-plus-circle {
+    /* display: inline-block; */
+    background: var(--color2);
+    color: var(--white);
+    padding: 0;
+    border-radius: 50%;
+}
+
+.story {
+    width: 100%;
+    height: auto;
+    background: var(--white);
+    border-radius: 10px;
+}
+
+.user_avatar {
+    margin: 0 auto;
+}
+.avatar--lg, /* top level css of the user dashboard*/
+.avatar--sm {
+    border-radius: 50%;
+    border: 2px solid var(--grey-color);
+    box-shadow: inset 1px 2px 3px #a0a0a0;
+}
+.avatar--sm {
+    width: 35px;
+    height: 35px;
+}
+
+.avatar--lg {
+    width: 150px;
+    height: 150px;
+}
+.poster--username {
+    font: 1.1em var(--font-family-2);
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+.toggle--options {
+    cursor: pointer;
+}
+
+.post-time {
+    display: inline-block;
+}
+
+
+/* .value {
+    padding: 1px 3px;
+    border-radius: inherit;
+    background: var(--white);
+    color: var(--color2);
+} */
+
+.action {
+    cursor: pointer;
+    /* padding: 2px 5px; */
+}
+
+.fa-thumbs-up {
+    border-radius: 50%;
+}
+
+.fa-thumbs-up.active { /*this should be toggled when the action btn is clicked*/
+    background: var(--color2);
+    color: var(--white);
+    font-size: .8em;
+}
+.render--new .form {
+    /* display: none; */
+    width: 100%;
+}
+
+.form > .textarea {
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.render--new .form .submit--btn {
+    display: inline-block;
+}
+
+.comment--section {
+    width: 400px;
+    height: 400px;
+}
+
+
+@media (max-width: 1199.98px) {
+   .main {
+       width: 100%;
+       margin: 0;
+   }
+
+}
+
+
+@media screen and (min-width: 1050px) {
+    
+}
+
+@media screen and (min-width: 850px) {
+
+}
+
+@media screen and (max-width: 991.98px) {
+
+}
+
+@media screen and (max-width: 890px) {
+    
+    
+}
+
+@media screen and (max-width: 767.98px) {
+    .comment--section {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 575.98px) {
+ 
+}
+
+@media screen and (max-width: 480px) {
+
+  
+}
