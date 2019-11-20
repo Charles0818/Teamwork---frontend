@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Auto detect text files and perform LF normalization
+* text=auto
+
 # dependencies
 /node_modules
 /.pnp
