@@ -32,15 +32,16 @@ class NewsFeed extends Component {
     console.log(this.state.isModalOpen);
   }
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     const { data: { token, userId } } = this.context;
     let { updateFeed, feed } = this.props;
     if (feed.length === 0) {
       trackPromise(
         getData(`${apiKey}/feed`, userId, token)
         .then(res => {
-          const { status, data } = res;
-          feed = [...data, ...feed];
+          console.log(res);
+          const { status, data: { content, comments, flags } } = res;
+          feed = [...this.assignProperties(content, comments, flags), ...feed]
           this.setState({
             feed: [...feed]
           })
@@ -51,6 +52,19 @@ class NewsFeed extends Component {
         })
       );
     } else return 
+  }
+
+  assignProperties = (content, comments, flags) => {
+    const feed = content.map(el => {
+      const commentArr = comments.filter(comment => comment.contentid === el.id);
+      const flagStat = flags.filter(flag => flag.contentid === el.id)
+      el.comments = commentArr;
+      el.flagStat = flagStat
+      return el
+    })
+
+    console.log(feed);
+    return feed
   }
 
   renderFeed = (feed) => {

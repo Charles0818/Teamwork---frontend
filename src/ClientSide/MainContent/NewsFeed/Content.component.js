@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Modal from '../../../GeneralComponents/modalComponent/modal.component';
 import Comments from '../Comments/Comments.component';
 import { FindUsername } from '../../../GeneralComponents/context/findUsername';
+import { UsersContext } from '../../../GeneralComponents/context/usersContext';
 import meme from '../../../Assets/images/meme.gif';
 class Content extends Component {
   constructor(props) {
@@ -12,6 +13,8 @@ class Content extends Component {
       
       }
   }
+
+  static contextType = UsersContext;
 
   toggleModal = (event)=> {
       event.preventDefault();
@@ -25,6 +28,10 @@ class Content extends Component {
           this.setState({ isModalOpen: true})
           )
       console.log(this.state.isModalOpen);
+  }
+
+  checkIfUserFlagged = (flagStats, userId) => {
+    return flagStats.find(arr => userId === arr.userId)
   }
 
     
@@ -68,9 +75,16 @@ class Content extends Component {
   }
 
   render() {
-    const { id, title, category, content, userid: authorId, type } = this.props.feed;
+    let { users } = this.context;
+    users = users.map(user => {
+      const { employeeId, photoDetails, firstName, lastName } = user;
+      return { employeeId, photoDetails, firstName, lastName }
+    });
+    const { id, title, category, content, userid: authorId, type, flagStat, comments } = this.props.feed;
+    const author = users.find(user => parseInt(user.employeeId, 10) === authorId);
+    const { photoDetails, firstName, lastName } = author;
     let { createdon: createdOn } = this.props.feed
-    const { firstName, lastName, userId } = this.props.userData
+    const { userId } = this.props.userData;
 
     return ( 
       <article className="story margin-bottom-md cursor-pointer">
@@ -95,13 +109,13 @@ class Content extends Component {
           <div className="d-flex justify-content--s-between align-items--center margin-bottom-sm">
             <div className="poster--details">
               <img className="avatar--sm icon" 
-              src="https://res.cloudinary.com/dx5lp5drd/image/upload/v1566505654/IMG_20190615_134638_qex57k.jpg"
+              src={photoDetails[0]}
                 alt="poster avatar" />
-              <span className="poster--username">{'charles'}</span>
+              <span className="poster--username">{`${firstName} ${lastName}`}</span>
             </div>
             <div className="flag-stats ">
-              <i className="fas fa-flag margin-right-sm cursor-pointer danger-text"></i>
-              <span className="flag font-weight-bold padding-sm danger-bckgr color-white border-r-circle">5</span>
+              <i className={`fas fa-flag margin-right-sm cursor-pointer ${'danger-text'}`}></i>
+              <span className="flag font-weight-bold font-md padding-sm danger-text border-r-circle">{flagStat.length}</span>
             </div>
           </div>
           <div className="post-time margin-bottom-sm">
@@ -123,7 +137,7 @@ class Content extends Component {
             padding-bottom-sm">
             <div className="comment-stats font-weight-bold cursor-pointer">
               <i className="fas fa-comments margin-right-sm paint-text"></i>
-              <span className="value comment icon">5</span> 
+              <span className="value comment icon">{comments.length}</span> 
             </div>
             <div className="action padding-sm" id="add--comment"
               style={{border: '1px solid #a0a0a0', borderRadius: '10px', justifySelf: 'flex-end'}}
@@ -133,7 +147,7 @@ class Content extends Component {
             </div>
           </div>
         </div>
-        <Modal toggleModal = {this.toggleModal} isModalOpen = {this.state.isModalOpen} contentTitle ="View Comments" contentBody = {<Comments />} />
+        <Modal toggleModal = {this.toggleModal} isModalOpen = {this.state.isModalOpen} contentTitle ="View Comments" contentBody = {<Comments comments={comments} feedId={id} users={users} />} />
       </article>
     );
   }
