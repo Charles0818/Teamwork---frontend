@@ -1,0 +1,17 @@
+:root {
+    --about-section-width: 350px;
+    --user-posts-width: calc(100% - var(--about-section-width));
+}
+.profileDetails.main {
+    margin-left: 0;
+    width: calc(100% - var(--sideBar-right-width));
+}
+
+.about-section {
+    width: var(--about-section-width);
+    height: auto;
+}
+
+.user-posts {
+    width: calc(var(--user-posts-width) - 30px);
+}

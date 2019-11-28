@@ -1,46 +1,57 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './sidebar.style.css';
 class LeftSidebar extends Component {
   constructor(props) {
       super(props);
       this.state = {  }
   }
-  render() { 
+
+  handleLogout = () => {
+    const isLoggedIn = false;
+    const { updateAccount, userData } = this.props;
+    const data = {
+      isLoggedIn,
+      userData
+    }
+    updateAccount(data);
+
+  }
+  render() {
+    const { userData: { photoDetails, interests, accountType } } = this.props;
+    console.log(this.props.userAccount)
     return ( 
       <aside>
         <div className="aside left">
           <div className="padding-top-lg">
             <div className="about-user border-line--h d-flex justify-content--center column align-items--center padding-bottom-sm">
-              <div className="user_avatar">
-                <img className="avatar--lg" src="https://res.cloudinary.com/dx5lp5drd/image/upload/v1566505654/IMG_20190615_134638_qex57k.jpg" alt="user avatar" />
+              <div className="user_avatar avatar--lg">
+                <img src={photoDetails[0]} alt="user avatar" />
               </div>
               <div className="interests margin-top-md d-flex padding-md">
-                <span className=" margin-right-sm margin-bottom-sm btn font-sm padding-sm">Technology</span>
-                <span className=" margin-right-sm margin-bottom-sm btn font-sm padding-sm">Robotic Innovation</span>
-                <span className=" margin-right-sm margin-bottom-sm btn font-sm padding-sm">Web Socket</span>
-                <span className=" margin-right-sm margin-bottom-sm btn font-sm padding-sm">Deep Learning</span>
+                { interests !== null ? (
+                  interests.map((interest, index) => {
+                    return <span key={index} className="margin-right-sm margin-bottom-sm btn font-sm padding-sm">{interest}</span>
+                  })
+                ) : null}
               </div>
             </div>
             <div className="content-wrapper">
-              <ul>
-                <li className="sidebar-link">
-                  <i className="fas fa-bell icon font-md"></i>
+              <ul className="margin-bottom-md">
+                {accountType === "admin" ? (
+                  <Link to="/admin/dashboard">
+                    <li className="sidebar-link padding-bottom-md margin-bottom-sm cursor-pointer">
+                      <i className="fas fa-cogs color-white padding-right-sm font-sm"></i>
+                      <span className="sidebar--link-text font-sm">Admin Panel</span>
+                    </li>
+                </Link>
+                ) : null}
+                <li className="sidebar-link padding-bottom-md margin-bottom-sm cursor-pointer">
+                  <i className="fas fa-newspaper color-white padding-right-sm font-md"></i>
                   <span className="sidebar--link-text font-md">Dashboard</span>
                 </li>
-                <li className="sidebar-link">
-                  <i className="fas fa-bell icon font-md"></i>
-                  <span className="sidebar--link-text font-md">Dashboard</span>
-                </li>
-                <li className="sidebar-link">
-                  <i className="fas fa-bell icon font-md"></i>
-                  <span className="sidebar--link-text font-md">Dashboard</span>
-                </li>
-                <li className="sidebar-link">
-                  <i className="fas fa-cogs icon font-md"></i>
-                  <span className="sidebar--link-text font-md">Settings</span>
-                </li>
-                <li className="sidebar-link">
-                  <i className="fas fa-laptop icon font-md"></i>
+                <li className="sidebar-link padding-bottom-md margin-bottom-sm cursor-pointer cursor-pointer" onClick={() => this.handleLogout()}>
+                  <i className="fas fa-sign-out-alt color-white padding-right-sm font-sm"></i>
                   <span className="sidebar--link-text font-md">Log out</span>
                 </li>
               </ul>

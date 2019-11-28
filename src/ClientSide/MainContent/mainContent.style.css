@@ -25,6 +25,7 @@
     height: auto;
     background: var(--white);
     border-radius: 10px;
+    padding: 30px 50px 10px;
 }
 
 .user_avatar {
@@ -35,6 +36,7 @@
     border-radius: 50%;
     border: 2px solid var(--grey-color);
     box-shadow: inset 1px 2px 3px #a0a0a0;
+    overflow: hidden;
 }
 .avatar--sm {
     width: 35px;
@@ -45,14 +47,57 @@
     width: 150px;
     height: 150px;
 }
+
+.avatar--lg img,
+.avatar--sm img {
+    width: inherit;
+    height: auto;
+    /* border-radius: inherit; */
+}
+
 .poster--username {
     font: 1.1em var(--font-family-2);
     font-weight: 500;
     letter-spacing: 2px;
 }
+.more-option {
+    visibility: hidden;
+    position: absolute;
+    opacity: 0;
+    top: 60px;
+    right: 0%;
+    transform: translateX(10%);
+    width: 140px;
+    margin-top: 40px;
+    background: #fff;
+    height: auto;
+    box-shadow: 2px 3px 6px #a0a0a0;
+    transition: all .5s ease ;
+    z-index: 99;
 
-.toggle--options {
-    cursor: pointer;
+}
+
+.more-option::before {
+    content: "";
+    position: absolute;
+    top: -10.1%;
+    right: calc(10%);
+    width: 20px;
+    height: 20px;
+    background: #000;
+    transform: rotate(45deg);
+    z-index: -99;
+    /* box-shadow: inherit; */
+    
+    
+}
+
+.trigger-more-action:hover .more-option,
+ .fa-ellipsis-h:focus-within > .more-option {
+    visibility: visible;
+    /* margin-top: 50px; */
+    opacity: 1;
+    top: 0px;
 }
 
 .post-time {
@@ -72,15 +117,6 @@
     /* padding: 2px 5px; */
 }
 
-.fa-thumbs-up {
-    border-radius: 50%;
-}
-
-.fa-thumbs-up.active { /*this should be toggled when the action btn is clicked*/
-    background: var(--color2);
-    color: var(--white);
-    font-size: .8em;
-}
 .render--new .form {
     /* display: none; */
     width: 100%;

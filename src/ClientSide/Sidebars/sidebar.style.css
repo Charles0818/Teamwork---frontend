@@ -20,13 +20,13 @@
     width: var(--sideBar-right-width);
 }
 
-.sidebar-link {
+/* .sidebar-link {
     margin-bottom: 40px;
 }
 
 .sidebar-link > i.icon {
     color: var(--grey-color);
-}
+} */
 
 .sidebar--link-text {
     color: var(--white);

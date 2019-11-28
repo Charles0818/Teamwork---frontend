@@ -17,7 +17,7 @@ class Comment extends Component {
                             <span className="poster--username">Username</span>
                         </div>
                         <div className="flag-stats ">
-                            <i class="fas fa-flag margin-right-sm cursor-pointer danger-text"></i>
+                            <i className="fas fa-flag margin-right-sm cursor-pointer danger-text"></i>
                             <span className="flag font-weight-bold padding-sm danger-bckgr color-white border-r-circle">5</span>
                         </div>
                     </div>
