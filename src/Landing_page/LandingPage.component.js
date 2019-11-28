@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 //components
 import Modal from '../GeneralComponents/modalComponent/modal.component';
-// import toggleModal from '../GeneralComponents/modalComponent/toggleModal';
+import { UserConsumer } from '../GeneralComponents/context/userContext';
 import Login from '../GeneralComponents/FormComponent/login.component';
 import './landingPage.styles.css';
 // const { isModalOpen } = toggleModal();
@@ -33,7 +33,6 @@ class LandingPage extends Component {
   render() {
     const {isModalOpen} = this.state;
     console.log(isModalOpen);
-  
     return (
       <header className="landingPage-header page-padding">
         <nav className="padding-top-sm d-flex align-items--center justify-content--s-between">
@@ -61,9 +60,6 @@ class LandingPage extends Component {
             <li className=" margin-right-sm">
               <Link to="/about" className="color-white font-md font-weight-bold nav-link">About</Link>
             </li>
-            
-            
-            
           </ul>
           <div className="d-inline-block btn" onClick ={(event)=> this.toggleModal(event)}>Sign in Here</div>
         </nav>
@@ -80,10 +76,10 @@ class LandingPage extends Component {
             <div className="d-inline-block btn" onClick ={(event)=> this.toggleModal(event)}>Sign in Here</div>
           </div>
           <div className="desc d-flex align-items--center">
-            <i class="fas fa-wifi color-white large-font-icon"></i>
-            <div className="padding-sm">
-              <p className="font-md">
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
+            <img src="https://res.cloudinary.com/dx5lp5drd/image/upload/v1574682959/avatar-2191932_1280-removebg-preview_wqs7ev.png"
+            alt="" style={{width: '100%', height: 'auto'}}/>
+            <div className="bckgr-white border-r-10 padding-md" style={{width: '100%', height: 'auto'}}>
+              <p className="font-md text-content color2 font-weight-600" style={{fontStyle: 'italic'}}>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
                 aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem
                 sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
                 consectetur, adipisci velit.
@@ -91,7 +87,11 @@ class LandingPage extends Component {
             </div>
           </div>
         </div>
-        <Modal toggleModal = {this.toggleModal} isModalOpen = {isModalOpen} contentTitle =" Sign in" contentBody = {<Login />} />
+        <UserConsumer>
+          {({updateAccount}) => (
+            <Modal toggleModal = {this.toggleModal} isModalOpen = {isModalOpen} contentTitle =" Sign in" contentBody = {<Login updateAccount={updateAccount} />} />
+          )}
+        </UserConsumer>
       </header>
     );
   }
