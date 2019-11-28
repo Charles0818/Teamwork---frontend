@@ -56,7 +56,8 @@
 }
 
 .poster--username {
-    font: 1.1em var(--font-family-2);
+    font: 1.1em var(--font-family-1);
+    font-weight: 600;
     font-weight: 500;
     letter-spacing: 2px;
 }
