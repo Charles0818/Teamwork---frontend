@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {HashRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
@@ -25,17 +25,17 @@ class App extends Component {
     // const IAdmin = Auth()
     // console.log(IAdmin)
     return (
-      <UserContextProvider>
-        <UsersContextProvider>
-          <Router>
-            <Route path="/" exact component ={LandingPage} />
-            <Switch>
-              <ProtectedRoute path="/user" auth={IsAuth} component={UserApp} />
-              <ProtectedRoute path="/admin" auth={IsAdmin} component={AdminApp} />
-            </Switch>
-          </Router>
-        </UsersContextProvider>
-      </UserContextProvider>
+      <Router basename={window.location.pathname || ''}>
+        <UserContextProvider>
+          <UsersContextProvider>
+              <Route path="/" exact component ={LandingPage} />
+              <Switch>
+                <ProtectedRoute path="/user" auth={IsAuth} component={UserApp} />
+                <ProtectedRoute path="/admin" auth={IsAdmin} component={AdminApp} />
+              </Switch>
+          </UsersContextProvider>
+        </UserContextProvider>
+      </Router>
     )
   }
 }
