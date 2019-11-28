@@ -36,14 +36,13 @@ class Dashboard extends Component {
 
   render() {
     const { updateAccount, userData } = this.props;
-    console.log(userData);
-    const { data: {photoDetails, interests} } = userData;
+    const { data: {photoDetails, interests, userId} } = userData;
     return (
       <Router>
         <section className="page-section d-flex">
           <LeftSidebar userData = {{ photoDetails, interests }} updateAccount={updateAccount} />}
           <Route path={this.props.path} component={ MainContent } />
-          <RightSidebar />
+          <RightSidebar userId={userId} />
         </section>
       </Router>
     );
