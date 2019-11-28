@@ -1,31 +1,26 @@
 /* eslint-disable no-unused-vars */
-import React, { Context, Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useContext } from 'react';
 import { UserContext } from '../context/userContext';
 
 
 const UseAuth = () => {
-    return (
-      <UserContext.Consumer>
-        {
-          ({ isLoggedIn, token, account_type, userId }) => {
-            console.log(isLoggedIn)
-            return ({isLoggedIn, token, userId, account_type})
-          }
-        }
-      </UserContext.Consumer>
-      
-    )
+ const {isLoggedIn, data} = useContext(UserContext);
+ const { userId, token, accountType } = data;
+
+ return { isLoggedIn, userId, token, accountType }
+ 
+}
+const IsAuth = () => {
+  const {isLoggedIn, userId, token } = UseAuth();
+  return (
+    isLoggedIn && userId && token ? true : false
+  )
+  
 }
 
-const isAuth = () => {
-  const { userId, token, isLoggedIn } = UseAuth();
-  return (userId && token && isLoggedIn) ? true : false
+const IsAdmin = () => {
+  const { accountType, isLoggedIn, userId, token } = UseAuth()
+  return (isLoggedIn && userId && token && accountType === 'admin' ) ? true : false
 }
 
-const isAdmin = () => {
-  const { account_type } = UseAuth()
-  return (account_type === 'admin' ) ? true : false
-}
-
-export { UseAuth, isAdmin, isAuth }
+export { IsAuth, IsAdmin }
