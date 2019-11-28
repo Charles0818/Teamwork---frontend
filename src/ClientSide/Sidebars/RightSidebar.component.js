@@ -13,9 +13,10 @@ class RightSidebar extends Component {
     let { users } = this.context;
     console.log(users);
     users = users.map((user, index) => {
-      const { photoDetails, firstName, lastName, } = user;
-      return { photoDetails, firstName, lastName, }
-     })
+      const { photoDetails, firstName, lastName, employeeId } = user;
+      return { photoDetails, firstName, lastName, employeeId }
+     });
+     const userId = this.props.userId;
     console.log(users);
     return ( 
       <aside className="thread">
@@ -23,21 +24,20 @@ class RightSidebar extends Component {
             <div className="padding-top-lg">
               <div className="accordion">
                 <div className="accordion--btn d-flex justify-content--center">
-                  <button className="btn margin-right-sm">Online</button>
-                  <button className="btn">Colleagues</button>
+                  <span className="font-md font-weight-600">All Colleagues</span>
                 </div>
                 <div className="content-wrapper">
                   <ul className="online--users">
                     {users.map((user, index) => {
-                      const { photoDetails, firstName, lastName } = user
+                      const { photoDetails, firstName, lastName, employeeId } = user
                       return (
-                        <Link to={`/users/${firstName}_${lastName}`} key={index}>
+                        <Link to={`${userId === employeeId ? '/user/profile' : `/users/${firstName}_${lastName}`}`} key={index}>
                           <li className="user d-flex align-items--center margin-bottom-md nowrap action" key={index}>
                             <div className="position-relative">
                               <img className="avatar--sm icon" src={photoDetails[0]} alt="poster avatar" />
                               <span className="online"></span>
                             </div>
-                            <span className="font-sm username">{`${firstName} ${lastName}`}</span>
+                            <span className="font-sm username">{`${firstName} ${lastName} ${userId === employeeId ? '(You)' : ''}`}</span>
                           </li>
                         </Link>
                       )
