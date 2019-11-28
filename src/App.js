@@ -25,7 +25,7 @@ class App extends Component {
     // const IAdmin = Auth()
     // console.log(IAdmin)
     return (
-      <Router basename={window.location.pathname || ''}>
+      <Router>
         <UserContextProvider>
           <UsersContextProvider>
               <Route path="/" exact component ={LandingPage} />
