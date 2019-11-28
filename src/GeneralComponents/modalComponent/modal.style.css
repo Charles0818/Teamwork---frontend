@@ -1,5 +1,12 @@
 .modalRoot {
-    opacity: .6;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: #00000086;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    transition: .5s all;
 }
 .modal--wrapper {
     position: relative;
