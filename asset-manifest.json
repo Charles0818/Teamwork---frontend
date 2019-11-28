@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/teamwork---frontend/static/css/main.38fa8df0.chunk.css",
+    "main.js": "/teamwork---frontend/static/js/main.5bb7323f.chunk.js",
+    "main.js.map": "/teamwork---frontend/static/js/main.5bb7323f.chunk.js.map",
+    "runtime-main.js": "/teamwork---frontend/static/js/runtime-main.119cd2d4.js",
+    "runtime-main.js.map": "/teamwork---frontend/static/js/runtime-main.119cd2d4.js.map",
+    "static/js/2.e8a0a619.chunk.js": "/teamwork---frontend/static/js/2.e8a0a619.chunk.js",
+    "static/js/2.e8a0a619.chunk.js.map": "/teamwork---frontend/static/js/2.e8a0a619.chunk.js.map",
+    "index.html": "/teamwork---frontend/index.html",
+    "precache-manifest.f477d4241102d55ffee015279c88e4ac.js": "/teamwork---frontend/precache-manifest.f477d4241102d55ffee015279c88e4ac.js",
+    "service-worker.js": "/teamwork---frontend/service-worker.js",
+    "static/css/main.38fa8df0.chunk.css.map": "/teamwork---frontend/static/css/main.38fa8df0.chunk.css.map",
+    "static/media/landingPage.styles.css": "/teamwork---frontend/static/media/design-desk-eyewear-313690.35fc0890.jpg",
+    "static/media/dog.gif": "/teamwork---frontend/static/media/dog.ef7ba97b.gif",
+    "static/media/meme.gif": "/teamwork---frontend/static/media/meme.8baeb72d.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.119cd2d4.js",
+    "static/js/2.e8a0a619.chunk.js",
+    "static/css/main.38fa8df0.chunk.css",
+    "static/js/main.5bb7323f.chunk.js"
+  ]
+}
