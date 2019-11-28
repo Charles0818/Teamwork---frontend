@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter } from 'react-router-dom';
 import webFont from 'webfontloader';
 import { Spinner } from './GeneralComponents/LoadingSpinner/loadingSpinner.component';
 import './index.css';
@@ -13,10 +14,10 @@ webFont.load({
 });
 
 ReactDOM.render(
-    <div>
+    <HashRouter>
         <App />
         <Spinner />
-    </div>,
+    </HashRouter>,
     document.getElementById('root')
 );
 
