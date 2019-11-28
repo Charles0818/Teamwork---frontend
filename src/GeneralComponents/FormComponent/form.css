@@ -17,17 +17,16 @@
     font-weight: 700;
     font-size: .9em;
     font-family: var(--font-family-1);
-    line-height: 30px;
+    line-height: 20px;
 }
 
-.form label > .error-msg {
+.error-msg {
     display: inline-block;
     visibility: hidden;
     color: var(--danger);
     transition: .5s all;
 }
-
-.form label > .error-msg.show {
+.error-msg.show {
     visibility: visible;
 }
 
@@ -39,9 +38,58 @@
     display: inline-block;
     width: 100%;
     padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+    margin-top: 5px;
     border: 1px solid #a0a0a0;
     border-radius: 7px;
+}
+
+.check.radio {
+    display: block;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.check.radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background: #eee;
+}
+
+.check:hover input ~ .checkmark {
+    background: #ccc;
+}
+
+.check input:checked ~ .checkmark {
+    background: var(--color2);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32%;
+    height: 32%;
+    border-radius: 50%;
+    background: #fff;
+    display: none;
+}
+
+.check.radio input:checked ~ .checkmark:after {
+    display: block;
 }
 
 .textarea {

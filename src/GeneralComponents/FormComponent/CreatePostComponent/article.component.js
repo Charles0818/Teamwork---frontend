@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { trackPromise } from 'react-promise-tracker';
 import { apiKey, sendData } from '../../AJAX/HttpRequest';
+import { FeedContext } from '../../context/feedContext';
+
 
 import '../form.css';
 import formValidation from '../formValidation';
@@ -10,38 +12,57 @@ class CreateArticle extends Component {
     this.state = { 
       title: '',
       articleBody: '',
+      category: '',
       // InputIsValid:
       formIsValid: true,
-      error: ''
+      error: {
+        title: 'title should not be empty',
+        articleBody: 'Content should not be empty',
+        category: []
+      }
      }
   }
+
+  static contextType = FeedContext;
 
   handleUserInput = (event) => {
     event.preventDefault();
     const { target } = event;
     console.log(target);
-    const { name, value } = target
-    this.setState({[name]: value}, () => {
-      formValidation(target, value)
-    })
+    const { name, value } = target;
+    if (name === 'category') {
+      const category = value.split(',');
+      this.setState({[name]: category});
+      return
+    }
+    this.setState({[name]: value}
+      // , () => {
+      // formValidation(target, name, value)
+    )
+    console.log(this.state)
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { title, articleBody } = this.state;
+    const { feed, updateFeed } = this.context;
+    const { userId, token } = this.props.userData
+    const { title, articleBody, category } = this.state;
     const data = {
       title,
-      article: articleBody
+      article: articleBody,
+      userId: parseInt(userId, 10),
+      category: category.length === 0 ? null : category
     }
+    console.log(data);
     trackPromise(
-      sendData(`${apiKey}/articles`, data)
+      sendData(`${apiKey}/articles`, data, token)
       .then(res => {
         console.log(res.data);
+        const { status, data } = res;
+        updateFeed(data, ...feed)
       }).catch(err => {
         const { error } = err;
-        this.setState(
-          {error: (error === "Incorrect Password" || "User not found") ? 'Email or password is incorrect' : ''}
-        )
+        console.log(err);
       })
     )
   }
@@ -55,16 +76,24 @@ class CreateArticle extends Component {
               className="form-control" value ={this.state.title}
               onChange = {(event) => this.handleUserInput(event)}
           />
-          <span className="error-msg italic padding-sm"></span>
         </label>
-        <label>
+        <span className="error-msg italic padding-sm"></span>
+        <label> Category
+          <input type="text" name="category" placeholder="(Optional) separate every category with ','" 
+              className="form-control" value ={this.state.category}
+              onChange = {(event) => this.handleUserInput(event)}
+          />
+        </label>
+        <span className="error-msg italic padding-sm"></span>
+        <label>Content
           <textarea type="text" name="articleBody" placeholder="What's happening?" 
             className="form-control textarea" value ={this.state.articleBody}
             onChange = {(event) => this.handleUserInput(event)}
           />
-          <span className="error-msg italic padding-sm"></span>
         </label>
-        <button disabled={!formIsValid} className={`submit--btn ${formIsValid ? '' : 'isInvalid'}`}>Publish</button>
+        <span className="error-msg italic padding-sm"></span>
+        <button disabled={!formIsValid} className={`submit--btn ${formIsValid ? '' : 'isInvalid'}`}
+          onClick={(event) => this.handleSubmit(event)}>Publish</button>
       </form>
     );
   }

@@ -25,25 +25,22 @@ class Login extends Component {
       password: password
     }
     trackPromise(
-      sendData(`https://teamworkbycharles.herokuapp.com/api/v1/auth/signin`, data)
+      sendData(`${apiKey}/auth/signin`, data)
       .then(res => {
-        const data = {
+        const { data } = res;
+        const userData = {
           isLoggedIn: true,
-          userId: res.data.userId,
-          account_type: res.data.account_type,
-          token: res.data.token
+          data
         }
-        UserContext = createContext(data);
-        // store.set('loggedIn', true);
-        (res.data.account_type === "admin") ? history.push('/admin/dashboard') : (
+        this.props.updateAccount(userData);
+        (res.data.accountType === "admin") ? history.push('/admin/dashboard') : (
           history.push('/user/dashboard')
         )
-        console.log(res.data);
-        console.log(UserContext)
       }).catch(err => {
         const { error } = err;
+        console.log(error);
         this.setState(
-          {error: (error === "Incorrect Password" || "User not found") ? 'Email or password is incorrect' : ''}
+          {error: error.split(',')[0]}
         )
       })
     )
