@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/Teamwork---frontend/static/css/main.559b3276.chunk.css",
-    "main.js": "/Teamwork---frontend/static/js/main.ae576604.chunk.js",
-    "main.js.map": "/Teamwork---frontend/static/js/main.ae576604.chunk.js.map",
+    "main.css": "/Teamwork---frontend/static/css/main.7f61ccf0.chunk.css",
+    "main.js": "/Teamwork---frontend/static/js/main.8f2fd72f.chunk.js",
+    "main.js.map": "/Teamwork---frontend/static/js/main.8f2fd72f.chunk.js.map",
     "runtime-main.js": "/Teamwork---frontend/static/js/runtime-main.8ec7a165.js",
     "runtime-main.js.map": "/Teamwork---frontend/static/js/runtime-main.8ec7a165.js.map",
     "static/js/2.ecc5bfaf.chunk.js": "/Teamwork---frontend/static/js/2.ecc5bfaf.chunk.js",
     "static/js/2.ecc5bfaf.chunk.js.map": "/Teamwork---frontend/static/js/2.ecc5bfaf.chunk.js.map",
     "index.html": "/Teamwork---frontend/index.html",
-    "precache-manifest.6321964adc1b945f47316fc433551b2f.js": "/Teamwork---frontend/precache-manifest.6321964adc1b945f47316fc433551b2f.js",
+    "precache-manifest.4a4db3c4330b73bacb1861d859e1ea57.js": "/Teamwork---frontend/precache-manifest.4a4db3c4330b73bacb1861d859e1ea57.js",
     "service-worker.js": "/Teamwork---frontend/service-worker.js",
-    "static/css/main.559b3276.chunk.css.map": "/Teamwork---frontend/static/css/main.559b3276.chunk.css.map",
+    "static/css/main.7f61ccf0.chunk.css.map": "/Teamwork---frontend/static/css/main.7f61ccf0.chunk.css.map",
     "static/media/landingPage.styles.css": "/Teamwork---frontend/static/media/design-desk-eyewear-313690.35fc0890.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.8ec7a165.js",
     "static/js/2.ecc5bfaf.chunk.js",
-    "static/css/main.559b3276.chunk.css",
-    "static/js/main.ae576604.chunk.js"
+    "static/css/main.7f61ccf0.chunk.css",
+    "static/js/main.8f2fd72f.chunk.js"
   ]
 }
