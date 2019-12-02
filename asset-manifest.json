@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/Teamwork---frontend/static/css/main.559b3276.chunk.css",
-    "main.js": "/Teamwork---frontend/static/js/main.4ead87b5.chunk.js",
-    "main.js.map": "/Teamwork---frontend/static/js/main.4ead87b5.chunk.js.map",
+    "main.js": "/Teamwork---frontend/static/js/main.ae576604.chunk.js",
+    "main.js.map": "/Teamwork---frontend/static/js/main.ae576604.chunk.js.map",
     "runtime-main.js": "/Teamwork---frontend/static/js/runtime-main.8ec7a165.js",
     "runtime-main.js.map": "/Teamwork---frontend/static/js/runtime-main.8ec7a165.js.map",
     "static/js/2.ecc5bfaf.chunk.js": "/Teamwork---frontend/static/js/2.ecc5bfaf.chunk.js",
     "static/js/2.ecc5bfaf.chunk.js.map": "/Teamwork---frontend/static/js/2.ecc5bfaf.chunk.js.map",
     "index.html": "/Teamwork---frontend/index.html",
-    "precache-manifest.00a16d34545054ec994155655d4dc4b5.js": "/Teamwork---frontend/precache-manifest.00a16d34545054ec994155655d4dc4b5.js",
+    "precache-manifest.6321964adc1b945f47316fc433551b2f.js": "/Teamwork---frontend/precache-manifest.6321964adc1b945f47316fc433551b2f.js",
     "service-worker.js": "/Teamwork---frontend/service-worker.js",
     "static/css/main.559b3276.chunk.css.map": "/Teamwork---frontend/static/css/main.559b3276.chunk.css.map",
     "static/media/landingPage.styles.css": "/Teamwork---frontend/static/media/design-desk-eyewear-313690.35fc0890.jpg"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.8ec7a165.js",
     "static/js/2.ecc5bfaf.chunk.js",
     "static/css/main.559b3276.chunk.css",
-    "static/js/main.4ead87b5.chunk.js"
+    "static/js/main.ae576604.chunk.js"
   ]
 }
