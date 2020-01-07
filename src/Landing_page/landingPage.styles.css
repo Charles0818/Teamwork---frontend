@@ -3,7 +3,7 @@
     background: linear-gradient(to bottom right,
      var(--color2),
     rgba(0, 0, 0, 0.863)),
-    url('../Assets/images/design-desk-eyewear-313690.jpg');
+    url('https://res.cloudinary.com/dx5lp5drd/image/upload/v1575882913/design-desk-eyewear-313690_erbwcn.jpg');
     background-size: cover;
     background-attachment: fixed;
     font-family: var(--font-family);
@@ -58,14 +58,14 @@
 }
 
 @media screen and (max-width: 991.98px) {
-
+    .landingPage-header {
+        height: 100%;
+        padding-bottom: 50px;
+    }
 }
 
 @media screen and (max-width: 890px) {
     
-    .left, .navbar1 {
-        display: none;
-    }
     
 }
 

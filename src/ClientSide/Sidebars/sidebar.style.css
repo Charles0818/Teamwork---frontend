@@ -1,32 +1,29 @@
 /*For Sidebar Component*/
 :root {
     --sideBar-left-width: 250px;
-    --sideBar-right-width: 350px;
+    --sideBar-right-width: 250px;
 }
 
 .aside {
     position: fixed;
     height: 100%;
     overflow-y: auto;
-    background: var(--dark);
-    /* overflow: hidden auto */
+    transition: .5s all;
 }
-
+.aside .close {
+    display: none;
+}
 .aside.left {
     width: var(--sideBar-left-width);
+    background: var(--dark);
+    left: 0;
 }
 
 .aside.right {
     width: var(--sideBar-right-width);
+    background: var(--white);
+    right: 0;
 }
-
-/* .sidebar-link {
-    margin-bottom: 40px;
-}
-
-.sidebar-link > i.icon {
-    color: var(--grey-color);
-} */
 
 .sidebar--link-text {
     color: var(--white);
@@ -34,19 +31,9 @@
     font-weight: 400;
 }
 
-.sidebar-linkcolor {
-    color: var(--color2)
-}
-
-.accordion {
-    background: var(--white);
-    width: 100%;
-    height: 100%;
-}
-
 /*Online User component*/
 
-.online {
+/* .online {
     position: absolute;
     left: 55%;
     bottom: 0%;
@@ -55,7 +42,7 @@
     border-radius: 50%;
     border: 1px solid var(--white);
     background: green;
-}
+} */
 
 .username {
     font-weight: 600;
@@ -63,14 +50,37 @@
 
 /*End of SideBar Component*/
 
-
 @media (max-width: 1199.98px) {
-    :root {
-        --sideBar-left-width: 230px;
-        --sideBar-right-width: 300px;
+    .aside.right,
+    .aside.left {
+        top: 0;
+        width: 0px;
+        z-index: 3;
     }
-    .aside {
-        display: none;
+
+    .aside .close {
+        display: inline-block;
+    }
+
+    .aside.left .close,
+    .aside.right .close {
+        position: absolute;
+        top: 5px;
+    }
+
+
+    .aside .close {
+        right: 15px;
+    }
+
+    .aside.left.show {
+        width: var(--sideBar-left-width);
+        box-shadow: 0px 7px 5px -5px #a0a0a0
+    }
+
+    .aside.right.show {
+        width: var(--sideBar-right-width);
+        box-shadow: 0px -17px 25px -5px #a0a0a0
     }
 }
 
@@ -84,6 +94,7 @@
 }
 
 @media screen and (max-width: 991.98px) {
+ 
 
 }
 
