@@ -1,10 +1,11 @@
 :root {
-    --about-section-width: 350px;
+    --about-section-width: 320px;
     --user-posts-width: calc(100% - var(--about-section-width));
 }
 .profileDetails.main {
     margin-left: 0;
-    width: calc(100% - var(--sideBar-right-width));
+    margin-right: 50px;
+    width: calc(100% - var(--sideBar-right-width) - 20px);
 }
 
 .about-section {
@@ -14,4 +15,44 @@
 
 .user-posts {
     width: calc(var(--user-posts-width) - 30px);
+}
+
+
+@media (max-width: 1199.98px) {
+  
+}
+
+@media screen and (min-width: 1050px) {
+
+}
+@media screen and (min-width: 850px) {
+
+}
+
+@media screen and (max-width: 991.98px) {
+
+    .profileDetails.main {
+        margin: 0;
+        width: 100%;
+    }
+    .details, .user-posts, .about-section {
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 890px) {
+    
+}
+
+@media screen and (max-width: 767.98px) {
+
+}
+
+@media screen and (max-width: 575.98px) {
+
+}
+
+@media screen and (max-width: 480px) {
+
 }
