@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/Teamwork---frontend/static/css/main.ed3dfb27.chunk.css",
-    "main.js": "/Teamwork---frontend/static/js/main.7f57eec2.chunk.js",
-    "main.js.map": "/Teamwork---frontend/static/js/main.7f57eec2.chunk.js.map",
-    "runtime-main.js": "/Teamwork---frontend/static/js/runtime-main.18c2ed7a.js",
-    "runtime-main.js.map": "/Teamwork---frontend/static/js/runtime-main.18c2ed7a.js.map",
-    "static/js/2.d4475057.chunk.js": "/Teamwork---frontend/static/js/2.d4475057.chunk.js",
-    "static/js/2.d4475057.chunk.js.map": "/Teamwork---frontend/static/js/2.d4475057.chunk.js.map",
+    "main.css": "/Teamwork---frontend/static/css/main.c07447b9.chunk.css",
+    "main.js": "/Teamwork---frontend/static/js/main.d0e7d34c.chunk.js",
+    "main.js.map": "/Teamwork---frontend/static/js/main.d0e7d34c.chunk.js.map",
+    "runtime-main.js": "/Teamwork---frontend/static/js/runtime-main.df244944.js",
+    "runtime-main.js.map": "/Teamwork---frontend/static/js/runtime-main.df244944.js.map",
+    "static/js/2.a4298016.chunk.js": "/Teamwork---frontend/static/js/2.a4298016.chunk.js",
+    "static/js/2.a4298016.chunk.js.map": "/Teamwork---frontend/static/js/2.a4298016.chunk.js.map",
     "index.html": "/Teamwork---frontend/index.html",
-    "precache-manifest.5b8156cdf685e315b12c080fb04e1759.js": "/Teamwork---frontend/precache-manifest.5b8156cdf685e315b12c080fb04e1759.js",
+    "precache-manifest.0b1361579c85637219b60103d59d9269.js": "/Teamwork---frontend/precache-manifest.0b1361579c85637219b60103d59d9269.js",
     "service-worker.js": "/Teamwork---frontend/service-worker.js",
-    "static/css/main.ed3dfb27.chunk.css.map": "/Teamwork---frontend/static/css/main.ed3dfb27.chunk.css.map",
-    "static/js/2.d4475057.chunk.js.LICENSE": "/Teamwork---frontend/static/js/2.d4475057.chunk.js.LICENSE"
+    "static/css/main.c07447b9.chunk.css.map": "/Teamwork---frontend/static/css/main.c07447b9.chunk.css.map",
+    "static/js/2.a4298016.chunk.js.LICENSE": "/Teamwork---frontend/static/js/2.a4298016.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.18c2ed7a.js",
-    "static/js/2.d4475057.chunk.js",
-    "static/css/main.ed3dfb27.chunk.css",
-    "static/js/main.7f57eec2.chunk.js"
+    "static/js/runtime-main.df244944.js",
+    "static/js/2.a4298016.chunk.js",
+    "static/css/main.c07447b9.chunk.css",
+    "static/js/main.d0e7d34c.chunk.js"
   ]
 }
