@@ -2,12 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { slideLeftSidebar } from '../../GeneralComponents/HelperFunctions/sidebar';
 import './sidebar.style.css';
+import { useAccount } from '../../GeneralComponents/context/userContext';
+
 const LeftSidebar = (props) => {
-  const { updateAccount, userData, userData: { photoDetails, interests, accountType } } = props;
-  const handleLogout = () => {
-    const data = { isLoggedIn: false, userData }
-    updateAccount(data);
-  }
+  const { userData: { photoDetails, interests, accountType } } = props;
+  const { logout } = useAccount()
   return ( 
     <aside className="aside left padding-top-sm">
       <div className="position-relative">
@@ -42,7 +41,8 @@ const LeftSidebar = (props) => {
               <i className="fas fa-newspaper color-white padding-right-sm font-md"></i>
               <span className="sidebar--link-text font-md">Dashboard</span>
             </li>
-            <li className="sidebar-link padding-bottom-md margin-bottom-sm cursor-pointer cursor-pointer" onClick={() => handleLogout()}>
+            <li className="sidebar-link padding-bottom-md margin-bottom-sm cursor-pointer cursor-pointer"
+            onClick={logout}>
               <i className="fas fa-sign-out-alt color-white padding-right-sm font-sm"></i>
               <span className="sidebar--link-text font-md">Log out</span>
             </li>
