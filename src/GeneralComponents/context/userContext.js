@@ -1,5 +1,4 @@
-import React, { createContext } from 'react';
-// import { UserContext } from '../FormComponent/login.component';
+import React, { createContext, useContext } from 'react';
 
 export const UserContext = createContext();
 export const UserConsumer = UserContext.Consumer;
@@ -19,21 +18,6 @@ class UserContextProvider extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    const avatar = {
-      male: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1574682959/businessman-310819_640_guvqva.png',
-      female: 'https://res.cloudinary.com/dx5lp5drd/image/upload/v1574682959/user-310807_640_wgamok.png'
-    }
-    let data = JSON.parse(JSON.stringify(this.state.data));
-    let { photoDetails, gender } = data
-    if(photoDetails === null) {
-      data.photoDetails = gender === 'male' ? [avatar.male, null] : [ avatar.female, null];
-      this.setState({
-        data: data
-      })
-    }else return
-  }
-
   updateAccount = changes => {
     this.setState({
       ...changes
@@ -50,5 +34,14 @@ class UserContextProvider extends React.Component {
   }
 }
 
-
 export default UserContextProvider;
+
+export const useAccount = () => {
+  const { updateAccount } = useContext(UserContext);
+  const logout = () => {
+    localStorage.removeItem('jwtToken');
+    const data = { isLoggedIn: false }
+    updateAccount(data);
+  }
+  return { logout };
+}

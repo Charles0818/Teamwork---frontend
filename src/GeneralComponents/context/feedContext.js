@@ -1,5 +1,4 @@
 import React, { createContext } from 'react';
-// import { FeedContext } from '../FormComponent/login.component';
 
 export const FeedContext = createContext();
 export const FeedConsumer = FeedContext.Consumer;
@@ -27,6 +26,5 @@ class FeedContextProvider extends React.Component {
     )
   }
 }
-
-
 export default FeedContextProvider;
+

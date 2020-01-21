@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import jwt_decode from 'jwt-decode'
 import { useContext } from 'react';
 import { UserContext } from '../context/userContext';
 
@@ -24,3 +25,24 @@ const IsAdmin = () => {
 }
 
 export { IsAuth, IsAdmin }
+
+export const GetToken = () => {
+    let state = '';
+    if(!localStorage.jwtToken) {
+      state = 'not found';
+      return { state }
+    }
+    const token = localStorage.getItem('jwtToken');
+    const decoded = jwt_decode(token);
+    const { userId, exp } = decoded
+    console.log(decoded);
+    state = validateToken(exp)
+    return { state, token, userId }
+}
+
+export const validateToken = (exp) => {
+  const currentTime = Date.now() / 1000;
+  let state = '';
+  exp < currentTime ? state = 'expired' : state = 'isValid';
+  return state
+}

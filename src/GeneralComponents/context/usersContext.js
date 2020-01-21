@@ -4,8 +4,10 @@ import React, { createContext } from 'react';
 export const UsersContext = createContext();
 export const UsersContextConsumer = UsersContext.Consumer;
 class UsersContextProvider extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
+    
     this.state = {
       users: [],
       addUser: changes => this.addUser(changes)
@@ -17,7 +19,16 @@ class UsersContextProvider extends React.Component {
       users: [...changes]
     })
   }
-  
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+ 
   render() {
     console.log(this.state);
     return (
