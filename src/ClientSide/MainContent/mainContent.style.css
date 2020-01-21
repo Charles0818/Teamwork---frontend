@@ -30,7 +30,8 @@
     margin: 0 auto;
 }
 .avatar--lg, /* top level css of the user dashboard*/
-.avatar--sm {
+.avatar--sm,
+.avatar--md {
     border-radius: 50%;
     border: 2px solid var(--grey-color);
     box-shadow: inset 1px 2px 3px #a0a0a0;
@@ -46,8 +47,14 @@
     height: 140px;
 }
 
+.avatar--md {
+    width: 70px;
+    height: 70px;
+}
+
 .avatar--lg img,
-.avatar--sm img {
+.avatar--sm img,
+.avatar--md img {
     width: inherit;
     height: auto;
 }
