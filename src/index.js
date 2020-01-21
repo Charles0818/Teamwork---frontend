@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
 import webFont from 'webfontloader';
 import { Spinner } from './GeneralComponents/LoadingSpinner/loadingSpinner.component';
 import './index.css';
@@ -9,15 +8,15 @@ import * as serviceWorker from './serviceWorker';
 
 webFont.load({
     google: {
-        families: ['Pacifico', 'Ubuntu:400,700', 'Vollkorn']
+        families: ['Pacifico', 'Ubuntu:400,700', 'Roboto']
     }
 });
 
 ReactDOM.render(
-    <HashRouter>
+    <div>
         <App />
         <Spinner />
-    </HashRouter>,
+    </div>,
     document.getElementById('root')
 );
 
