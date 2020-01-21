@@ -1,48 +1,59 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import React, { useEffect, useContext } from 'react';
+import { HashRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
+import { trackPromise } from 'react-promise-tracker';
 import Dashboard from './DashboardComponent/dashboard.component';
-import AdminApp from '../Admin/AdminApp.component';
 import Profile from './Profile/profile.component';
 import EditProfile from './Profile/ProfileEdit.component';
 import ViewUserProfile from './Profile/ViewUserProfile.component';
 import Navbar from '../GeneralComponents/Navbar/Navbar.component';
 import { UserContext } from '../GeneralComponents/context/userContext';
-class UserApp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {  }
-  }
+import { getData, apiKey } from '../GeneralComponents/AJAX/HttpRequest';
+import { addDefaultAvatar } from '../GeneralComponents/context/addDefaultAvatar';
+import FeedContextProvider from '../GeneralComponents/context/feedContext';
 
-  static contextType = UserContext;
-
-  render() {
-    const { updateAccount, data } = this.context;
-    const { userId, token } = data;
-    const { match } = this.props;
-    return ( 
-      <React.Fragment>
+const UserApp = (props) => {
+  const { users, addUser, history: { push }, match: { path, params } } = props;
+  const { updateAccount, data, data: { userId, token } } = useContext(UserContext);
+  useEffect(() => {
+    if(users.length === 0) {
+      trackPromise(
+        getData(`${apiKey}/auth/users`, userId, token)
+        .then(res => {
+          let { data } = res;
+          data = data.map(user => addDefaultAvatar(user))
+          console.log(data)
+          addUser(data);
+          push(`${path}/dashboard`)
+        }).catch(err => {
+          console.log(err);
+        })
+      )
+    }else return 
+  }, [addUser, path, push, token, userId, users.length])
+    
+  return ( 
+    <React.Fragment>
+      <FeedContextProvider>
         <Router>
-          <Route path={`${match.path}/dashboard`} component={Navbar} />
+          <Route path={`${path}/dashboard`} component={Navbar} />
           <Switch>
-            <Route exact path={`${match.path}/profile/edit`}
-              render={(props) => <EditProfile updateAccount={updateAccount} userData={data} {...props} />}
+            <Route exact path={`${path}/profile/edit`}
+              render={(props) => <EditProfile updateAccount={updateAccount} userData={data} users={users} addUser={addUser} {...props} />}
             />
-            <Route exact path={`${match.path}/profile`}
+            <Route exact path={`${path}/profile`}
               render={(props) => <Profile updateAccount={updateAccount} userData={data} {...props} />}
             />
-            <Route exact path={`${match.path}/dashboard`}
+            <Route path={`${path}/dashboard`}
               render={(props) => <Dashboard  userData={{data}} updateAccount={updateAccount} {...props} />}
             />
-            <Route exact path={`${match.path}/:username`}
-              render={(props) => <ViewUserProfile authToken={token} userId={userId} {...props} />}
+            <Route exact path={`${path}/:username`}
+              render={(props) => <ViewUserProfile key={params.username} userData={{userId, token}} {...props} />}
             />
-            <Route path="/admin" component={AdminApp} />
           </Switch>
         </Router>
-      </React.Fragment>
-    );
-  }
+      </FeedContextProvider>
+    </React.Fragment>
+  );
 }
 
-export default UserApp;
+export default withRouter(UserApp);

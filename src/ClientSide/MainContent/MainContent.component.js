@@ -1,37 +1,36 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import FeedContextProvider, { FeedConsumer } from '../../GeneralComponents/context/feedContext';
+import React, { useContext } from 'react';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import { FeedConsumer } from '../../GeneralComponents/context/feedContext';
+import { UserContext } from '../../GeneralComponents/context/userContext';
 import './mainContent.style.css';
 //components
 import NewsFeed from './NewsFeed/NewsFeed.component';
 import SingleContent from './NewsFeed/singleContent.component';
 
-class MainContent extends Component {
-  constructor(props) {
-      super(props);
-      this.state = {  }
-  }
-  render() { 
-    return (
-      <main className="main">
-        <div className="content-wrapper">
-          <Router>
-            <FeedContextProvider>
-              <FeedConsumer>
-                {({updateFeed, feed}) => (
-                  <Switch>
-                      <Route render={(props) => <NewsFeed path={`${props.match.path}`} updateFeed={updateFeed} feed={feed} />} />
-                      <Route path={"/articles/:articleId" || "/gifs/:gifId"} component={SingleContent} />
-                  </Switch>
-                )}
-              </FeedConsumer>
-            </FeedContextProvider>
-              {/* <Route path='/:feedId' component= {} /> */}
-          </Router>
-        </div>
-      </main>
-    );
-  }
+const MainContent = (props) => {
+  const { data: { userId, token } } = useContext(UserContext);
+  const { match: { path } } = props;
+  return (
+    <main className="main">
+      <div className="content-wrapper">
+        <Router>
+          <FeedConsumer>
+            {({updateFeed, feed}) => (
+              <Switch>
+                <Route exact path={`${path}`} render={(props) => <NewsFeed updateFeed={updateFeed} feed={feed} props={{...props}} />} />
+                <Route path={`${path}/articles/:articleId`}
+                  render={(props) => <SingleContent userData={{ userId, token }} updateFeed={updateFeed} allFeed={feed} props={{...props}} />}
+                />
+                <Route path={`${path}/gifs/:gifId`}
+                  render={(props) => <SingleContent userData={{ userId, token }} updateFeed={updateFeed} allFeed={feed} props={{...props}} />}
+                />
+              </Switch>
+            )}
+          </FeedConsumer>
+        </Router>
+      </div>
+    </main>
+  );
 }
 
 export default MainContent;

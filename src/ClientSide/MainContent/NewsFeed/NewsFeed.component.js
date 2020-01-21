@@ -1,94 +1,56 @@
-import React, { Component } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { trackPromise } from 'react-promise-tracker';
 import { getData, apiKey } from '../../../GeneralComponents/AJAX/HttpRequest'
-
+import { assignProperties } from '../../../GeneralComponents/HelperFunctions/feed';
 import Content from './Content.component';
-import Modal from '../../../GeneralComponents/modalComponent/modal.component';
 import CreateContent from '../../../GeneralComponents/FormComponent/CreatePostComponent/CreateContent.component';
 import { UserContext } from '../../../GeneralComponents/context/userContext';
-import { displayIfEmpty } from '../../../GeneralComponents/displayMessage/displayIfEmpty'
-class NewsFeed extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      isModalOpen: false,
-      feed: this.props.feed
-    }
+import { displayIfEmpty } from '../../../GeneralComponents/displayMessage/displayIfEmpty';
+import useModal from '../../../GeneralComponents/modalComponent/toggleModal';
+
+const  renderFeed = (feed, props, data) => {
+  const { userId, firstName, lastName, token } = data;
+  const { feed: allFeed, updateFeed } = props;
+  if (feed.length !== 0) {
+    return feed.map((feed, index) => <Content key={index} feed={feed} allFeed={allFeed} updateFeed={updateFeed} userData={{userId, firstName, lastName, token}}/>)
   }
+  else return displayIfEmpty("No post to show!!! Why not be the first to own a content? Click the plus button above")
+}
 
-  static contextType  = UserContext;
+const NewsFeed = (props) => {
+  let { updateFeed, feed } = props;
+  const { data } = useContext(UserContext);
+  const { openModal, ModalChild } = useModal('', CreateContent);
+  console.log(openModal, ModalChild);
 
-  toggleModal = (event)=> {
-    event.preventDefault();
-    const target = event.target;
-    console.log(target);
-    const targetClassList = [...target.classList];
-    console.log(targetClassList);
-    (targetClassList.includes('close')) ? (
-      this.setState({isModalOpen: false })
-      ) : (
-        this.setState({ isModalOpen: true})
-        )
-    console.log(this.state.isModalOpen);
-  }
-
-  UNSAFE_componentWillMount() {
-    const { data: { token, userId } } = this.context;
-    let { updateFeed, feed } = this.props;
+  useEffect(() => {
+    const { token, userId }  = data;
+    let { feed } = props;
     if (feed.length === 0) {
       trackPromise(
         getData(`${apiKey}/feed`, userId, token)
         .then(res => {
-          console.log(res);
-          const { status, data: { content, comments, flags } } = res;
-          feed = [...this.assignProperties(content, comments, flags), ...feed]
-          this.setState({
-            feed: [...feed]
-          })
+          const { data: { content, comments, flags } } = res;
+          feed = [...assignProperties(content, comments, flags), ...feed]
           updateFeed(feed)
-            console.log(res);
         }).catch(err => {
             console.log(err)
         })
       );
     } else return 
-  }
+  })
 
-  assignProperties = (content, comments, flags) => {
-    const feed = content.map(el => {
-      const commentArr = comments.filter(comment => comment.contentid === el.id);
-      const flagStat = flags.filter(flag => flag.contentid === el.id)
-      el.comments = commentArr;
-      el.flagStat = flagStat
-      return el
-    })
-
-    console.log(feed);
-    return feed
-  }
-
-  renderFeed = (feed) => {
-    const { data: { userId, firstName, lastName } } = this.context
-    if (feed.length !== 0) {
-      return feed.map((feed, index) => <Content key={index} feed={feed} userData={{userId, firstName, lastName}}/>)
-    }
-    else return displayIfEmpty("No post to show!!! Why not be the first to own a content? Click the plus button above")
-  }
-
-  render() {
-    const { feed } = this.state;
-    return ( 
-      <div>
-        <div className="create--post margin-bottom-md">
-          <i className="fas fa-plus-circle font-xlg action" onClick={(event) => this.toggleModal(event)}></i>
-        </div>
-        <section className="news-feed">
-          {this.renderFeed(feed)}
-        </section>
-        <Modal toggleModal = {this.toggleModal} isModalOpen = {this.state.isModalOpen} contentTitle ="" contentBody = {<CreateContent />} />
+  return ( 
+    <div>
+      <div className="create--post margin-bottom-md">
+        <i className="fas fa-plus-circle font-xlg action" onClick={openModal}></i>
       </div>
-    );
-  }
+      <section>
+        {renderFeed(feed, props, data)}
+      </section>
+      {ModalChild}
+    </div>
+  );
 }
 
 export default NewsFeed;

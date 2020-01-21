@@ -1,104 +1,92 @@
-import React, { Component } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { apiKey, sendData } from '../../AJAX/HttpRequest';
 import { FeedContext } from '../../context/feedContext';
 import { trackPromise } from 'react-promise-tracker';
-import '../form.css'
+import { useHttpStatus } from '../../displayMessage/DisplayTop';
+import { assignPropsToNewFeed } from '../../HelperFunctions/feed';
+import { useFormInput } from '../../HelperFunctions/form';
+import '../form.css';
 
-class CreateGif extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            title: '',
-            category: '',
-            file: null,
-            fileURL: null
-         }
-    }
-    static contextType  = FeedContext;
+const CreateGif = (props) => {
+  const { userData: { token, userId } } = props;
+  const { feed, updateFeed } = useContext(FeedContext);
+  const { state : title, onChange: changeTitle } = useFormInput();
+  const { state: category, onChange: setCategory } = useFormInput(); 
+  const { state: file, handleFile: changeFile } = useFormInput(); 
+  const { state: fileURL, handleFile: changeFileURL } = useFormInput();
+  const { updateAjaxStatus, HttpStatusComponent } = useHttpStatus(); 
 
-    handleUserInput = (event) => {
-      event.preventDefault();
-      const { type } = event.target.attributes;
-      // const name = event.target.name;
-      const { name, value } = event.target;
-      if(type === 'file') {
-        this.setState({
-          fileURL: URL.createObjectURL(event.target.files[0]),
-          file: event.target.files[0]
-        });
-        return
-      }
-      this.setState({[name]: value}, () => {
-      console.log(this.state);
+  const onFileChange = (event) => {
+    event.preventDefault();
+    const { target: { files } } = event;
+    changeFileURL(URL.createObjectURL(files[0]));
+    changeFile(files[0]);
+  }
+
+  const splitCategory = (category) => {
+    category = category.split(',' || ';');
+    return category.length === 0 ? null : category
+  };
+
+  const handleSubmit = (event) => {
+    const formData = new FormData();
+    formData.append('files', file);
+    formData.append('title', title);
+    formData.append('category[]', splitCategory(category))
+    formData.append('userId', userId);
+    console.log(formData)
+    event.target.value = 'Publishing...'
+    trackPromise(
+      sendData(`${apiKey}/gifs`, formData, token, true)
+      .then(res => {
+        const { status, data, data: { message } } = res;
+        updateFeed([assignPropsToNewFeed(data.feed), ...feed]);
+        updateAjaxStatus({show: true, message, status});
+        console.log(res);
+      }).catch(err => {
+        const { status, error } = err;
+        updateAjaxStatus({show: true, message: error.split(',')[0], status});
+        console.log(err)
       })
-    }
+    )
+  }
 
-    assignArray = (category) => {
-      category = category.split(',');
-      return category.length <= 0 ? null : category
-    }
-    handleSubmit = (event) => {
-      event.preventDefault();
-      let { feed, updateFeed } = this.context;
-      const { token, userId } = this.props.userData;
-      let { title, category, file } = this.state;
-      category = this.assignArray(category);
-      const formData = new FormData();
-      formData.append('files', file);
-      formData.append('title', title);
-      formData.append('category', category)
-      formData.append('userId', userId)
-      event.target.value = 'Publishing...'
-      trackPromise(
-        sendData(`${apiKey}/gifs`, formData, token)
-        .then(res => {
-          event.target.value = 'Publish'
-          const { data } = res;
-          feed = [data, ...feed];
-          updateFeed(feed)
-          console.log(res);
-        }).catch(err => {
-          console.log(err)
-        })
-      )
-    }
-
-
-    render() { 
-        return ( 
-          <form className="form" method="POST" ref="createGif">
-            <label> GIF title
-              <input type="text" name="title" placeholder="Enter title" 
-                  className="form-control" value ={this.state.title}
-                  onChange = {(event) => this.handleUserInput(event)}
-              />
-              <span className="error-msg italic padding-sm"></span>
-            </label>
-            <label> Category
-              <input type="text" name="category" placeholder="(Optional) separate every category with ','" 
-                  className="form-control" value ={this.state.category}
-                  onChange = {(event) => this.handleUserInput(event)}
-              />
-            </label>
-            <span className="error-msg italic padding-sm"></span>
-            <div className="file_display"
-              style={{width: '150px', height: '150px', display: `${this.state.fileURL === null ? 'none' : 'inline-block'}`}}>
-              <img src={this.state.fileURL} alt="" />
+  return (
+    <Fragment>
+      <form className="form" method="POST">
+        <label> GIF title
+          <input type="text" name="title" placeholder="Enter title" 
+            className="form-control" value ={title}
+            onChange = {(event) => changeTitle(event)}
+          />
+          <span className="error-msg italic padding-sm"></span>
+        </label>
+        <label> Category
+          <input type="text" name="category" placeholder="(Optional) separate every category with ','" 
+            className="form-control" value ={category}
+            onChange = {(event) => setCategory(event)}
+          />
+        </label>
+        <span className="error-msg italic padding-sm"></span>
+        <div className="file_display padding-bottom-sm"
+          style={{width: '150px', height: 'auto', display: `${fileURL === null ? 'none' : 'inline-block'}`}}>
+          <img src={fileURL} alt="" style={{width: '100%', height:'auto'}} />
+        </div>
+        <div className="padding-bottom-md">
+          <label className="btn--file d-inline-block">
+            <div className="upload--icon">
+              <i className="far fa-image font-md d-inline-block"></i>
+              <span className="padding-left-sm font-sm">{'Upload GIF...'}</span>
             </div>
-            <div className="padding-bottom-md">
-              <label className="btn--file d-inline-block">
-                <div className="upload--icon">
-                  <i className="far fa-image font-md d-inline-block"></i>
-                  <span className="padding-left-sm font-sm">{'Upload GIF...'}</span>
-                </div>
-                <input type="file" name="file" multiple={false} onChange = {(event) => this.handleUserInput(event)} />
-              </label>
-              <span className="error-msg italic padding-sm"></span>
-            </div>
-            <input onClick={(event) => this.handleSubmit(event)} type="submit" value="Publish" className="submit--btn" />
-          </form>
-        );
-    }
+            <input type="file" name="file" multiple={false} onChange = {(event) => onFileChange(event)} />
+          </label>
+          <span className="error-msg italic padding-sm"></span>
+        </div>
+        <input onClick={(event) => handleSubmit(event)} type="submit" value="Publish" className="submit--btn" />
+      </form>
+      {HttpStatusComponent}
+    </Fragment>
+  );
 }
  
 export default CreateGif;

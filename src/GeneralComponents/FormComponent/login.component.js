@@ -1,83 +1,68 @@
-import React, { Component, createContext } from 'react';
+import React, { useContext, useState, Fragment  } from 'react';
 import { trackPromise } from 'react-promise-tracker';
 import { withRouter } from 'react-router-dom';
 import { apiKey, sendData } from '../AJAX/HttpRequest';
+import { UserContext } from '../context/userContext';
+import { useFormInput } from '../HelperFunctions/form';
+import { useHttpStatus } from '../displayMessage/DisplayTop';
 import './form.css';
 
-let UserContext = createContext();
+const Login = (props) =>  {
+  const { history, closeModal } = props;
+  const { state: email, onChange: changeEmail } = useFormInput();
+  const { state: password, onChange: changePassword } = useFormInput();
+  const { updateAjaxStatus, HttpStatusComponent } = useHttpStatus();
+  const { updateAccount } = useContext(UserContext);
+  const [ error, setError ] = useState('');
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      email: '',
-      password: '',
-      error: '',
-    }
-  }
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const { email, password } = this.state;
-    const { history } = this.props;
-    const data = {
-      email: email,
-      password: password
-    }
+    const data = { email, password }
     trackPromise(
       sendData(`${apiKey}/auth/signin`, data)
       .then(res => {
         const { data } = res;
-        const userData = {
-          isLoggedIn: true,
-          data
-        }
-        this.props.updateAccount(userData);
-        (res.data.accountType === "admin") ? history.push('/admin/dashboard') : (
-          history.push('/user/dashboard')
+        const userData = { isLoggedIn: true, data };
+        localStorage.setItem('jwtToken', data.token);
+        console.log(data);
+        updateAccount(userData);
+        closeModal();
+        (data.accountType === "admin") ? history.push('/admin') : (
+          history.push('/user')
         )
       }).catch(err => {
-        const { error } = err;
-        console.log(error);
-        this.setState(
-          {error: error.split(',')[0]}
-        )
+        const { status } = err;
+       if(status) {
+        setError('Incorrect email or password');
+        return
+       }
+       const message = 'Unable to connect to database, check your internet connection';
+       updateAjaxStatus({show: true, message, status: 'failure'})
       })
     )
   }
 
-  onChange = (event) => {
-      event.preventDefault();
-      const target = event.target;
-      this.setState({
-        [target.name]: target.value
-      })
-  }
-  render() {
-      console.log(this.state);
-      return (
-          <form className="form" method="POST" ref="LoginForm">
-            <label> Email
-                <input type="email" name="email" placeholder="Enter your email" 
-                    className="form-control" value ={this.state.email} onChange = {(event) => this.onChange(event)}
-                />
-            </label>
-            <label> Password
-                <input type="password" name="password" placeholder="Enter Password"
-                    className="form-control" value ={this.state.password} onChange = {(event) => this.onChange(event)}
-                />
-            </label>
-              <span className="d-block italic danger-text font-sm padding-bottom-sm font-weight-bold">
-                  {this.state.error}
-              </span>
-            <input onClick={(event) => this.handleSubmit(event)} type="submit" value="Login" className="submit--btn" />
-        </form>
-      );
-  }
+  return (
+    <Fragment>
+      <form className="form" method="POST">
+        <label> Email
+          <input type="email" name="email" placeholder="Enter your email" 
+            className="form-control" value ={email} onChange = {(event) => changeEmail(event)}
+          />
+        </label>
+        <label> Password
+          <input type="password" name="password" placeholder="Enter Password"
+            className="form-control" value ={password} onChange = {(event) => changePassword(event)}
+          />
+        </label>
+        <span className="d-block italic danger-text font-sm padding-bottom-sm font-weight-bold">
+          {error}
+        </span>
+        <input onClick={(event) => handleSubmit(event)} type="submit" value="Sign in" className="submit--btn" />
+      </form>
+      {HttpStatusComponent}
+    </Fragment>
+  );
 }
 
-// const UserProvider = UserContext.Provider;
-// const UserConsumer = UserContext.Consumer;
-
 export default withRouter(Login);
-export { UserContext };
