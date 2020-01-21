@@ -1,38 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Modal from './modal.component';
-const useModal = (bool)=> {
-    const [state, setState] = useState({isModalOpen: null});
-    useEffect(() => {
-        setState({isModalOpen: bool});
-    }, [bool])
-    const { isModalOpen } = state;
-    return isModalOpen
-}
-const useModalState = (bool) => useModal(bool)
 
-const ToggleModal = (event, Content, title) => {
-    event.preventDefault();
-
-    let bool = null;
-    const target = event.target;
-    console.log(target);
-    const targetClassList = [...target.classList];
-    console.log(targetClassList);
-    targetClassList.includes('close') ? bool = false : bool = true;
-    const isModalOpen = useModalState(bool)
-     return (
-        <Modal toggleModal = {'hi'} isModalOpen = {isModalOpen} contentTitle ={title} contentBody = {<Content />} />
-     )
+const useModal = (contentTitle, Comp, props) => {
+    const [isModalOpen, setIsModaOpen] = useState(false);
+    const closeModal = () => setIsModaOpen(false);
+    const openModal = () => setIsModaOpen(true);
+    const ModalChild = RenderModal(isModalOpen, closeModal, contentTitle, Comp, props)
+    return { closeModal, openModal, isModalOpen, ModalChild }
 }
-// const useModalState = (event) => {
-//     event.preventDefault();
-//     const target = event.target;
-//     console.log(target);
-//     const targetClassList = [...target.classList];
-//     console.log(targetClassList);
-   
-//     return (
-//         <Modal useModalState = {this.useModalState} isModalOpen = {state} contentTitle ="View Comments" contentBody = {<Comments />} />
-//     )
-// }
-export default ToggleModal
+
+const RenderModal = (isModalOpen, closeModal, contentTitle, Comp, props) => {
+    return (
+        <Modal closeModal = {closeModal} isModalOpen = {isModalOpen} contentTitle ={contentTitle} contentBody = { <Comp closeModal={closeModal} {...props} />} />
+    )
+}
+ 
+export default useModal;
