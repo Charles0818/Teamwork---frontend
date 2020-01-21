@@ -1,5 +1,6 @@
 import { stringifyDate } from './date';
 import React, { useContext } from 'react';
+import {  Link } from 'react-router-dom';
 import { FeedContext } from '../context/feedContext';
 import Content from '../../ClientSide/MainContent/NewsFeed/Content.component';
 import { displayIfEmpty } from '../displayMessage/displayIfEmpty';
@@ -46,7 +47,6 @@ export const assignPropsToNewFeed = (feed) => {
 
 export const useFeedContext = (action) => {
   const { feed, updateFeed } = useContext(FeedContext);
-  console.log(feed);
   switch(action) {
     case 'add' :
       const addComment = (contentId, comment) => {
@@ -105,6 +105,55 @@ export const renderFeed = (feed, userData) => {
   else return displayIfEmpty("No Content")
 };
 
+export const updateFlagStats = (contentId, contentType) => {
+  switch(contentType) {
+    
+  }
+
+}
+
 export const checkIfUserFlagged = (flagStats, userId) => {
   return flagStats.find(arr => parseInt(arr.userid, 10) === userId);
+}
+
+export const contentType = (type, id, content, title, single) => {
+  switch(type) {
+    case 'article' :
+      return (
+        <div className="text-content padding-bottom-sm">
+          <p className="font-weight-bold font-md padding-bottom-sm">
+            {title}
+          </p>
+          <p className="font-sm" style={{overflowY: 'hidden', maxHeight: '150px'}}>{content[0]}</p>
+          {!single ? (
+            <Link to={`/user/dashboard/articles/${id}`}>
+              <span className='padding-sm paint-text font-weight-bold'>...Read More</span>
+            </Link>
+          ) : null } 
+        </div>
+      )
+    case 'gif' :
+      return (
+        <div className="padding-bottom-sm">
+          <p className="font-weight-bold font-sm padding-bottom-md">
+            {title}
+          </p>
+          <div className="d-flex justify-content--center align-items--center padding-bottom-md">
+            <div className="" style={{width: '70%', height: '150px', overflow: 'hidden'}}>
+              <img className="" style={{width: '100%', height: 'auto'}}
+                src={content[0]} publicid = {content[1]}
+                alt="poster avatar"
+              />
+            </div>
+          </div>
+          {!single ? (
+            <Link to={`/user/dashboard/gifs/${id}`}>
+              <span className='padding-md paint-text font-weight-bold'>...View full size</span>
+            </Link>
+          ) : null}
+        </div>
+      )
+    default:
+      break;
+  }
 }
