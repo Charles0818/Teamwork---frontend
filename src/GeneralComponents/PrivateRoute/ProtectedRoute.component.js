@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UsersContext } from '../context/usersContext';
 import { Route, Redirect } from 'react-router-dom';
 
 const ProtectedRoute = ({ component: Comp, auth, path, ...rest }) => {
+  const usersContext = useContext(UsersContext);
+  const { users, addUser } = usersContext;
   const isAuth = auth();
     return(
         <Route 
@@ -9,7 +12,7 @@ const ProtectedRoute = ({ component: Comp, auth, path, ...rest }) => {
           {...rest}
           render={props => {
             return isAuth ? (
-              <Comp {...props} />
+              <Comp users={users} addUser={addUser} {...props} />
             ) : (
               <Redirect to={{
                 pathName: "/",
